@@ -44,7 +44,7 @@ export default function Home() {
             onLetterAnimationComplete={() => {}}
           />
             <SplitText 
-              text="A beautiful, modern task management application inspired by meditation app designs. Organize your life with encrypted local storage and stunning UI."
+              text="Find your flow. Transform chaos into calm with mindful task management that nurtures focus and inner peace."
               className="text-lg mb-12 max-w-3xl mx-auto text-amber-700 leading-relaxed"
               splitType="words"
               delay={300}
@@ -95,7 +95,7 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
+            {/* Feature 1 - Create Tasks */}
             <div className="group relative">
               <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -103,12 +103,24 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Task Management</h3>
-                <p className="text-gray-600 leading-relaxed">Create, edit, and organize tasks with beautiful drag-and-drop interface. Set priorities, due dates, and categories.</p>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Create Tasks</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">Add tasks with priorities, categories, and due dates. Organize your work with beautiful drag-and-drop interface.</p>
+                <div className="rounded-xl overflow-hidden shadow-lg">
+                  <video 
+                    className="w-full h-48 object-cover" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                  >
+                    <source src="/videos/Task_final.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
 
-            {/* Feature 2 */}
+            {/* Feature 2 - Plan Your Day */}
             <div className="group relative">
               <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -116,60 +128,120 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Daily Planner</h3>
-                <p className="text-gray-600 leading-relaxed">Visual task scheduling with hourly time slots. Drag-and-drop interface for intuitive planning.</p>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Plan Your Day</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">Schedule tasks in your daily planner with hourly time slots. Visual planning made simple and intuitive.</p>
+                <div className="rounded-xl overflow-hidden shadow-lg">
+                  <video 
+                    className="w-full h-48 object-cover" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                  >
+                    <source src="/videos/planner_final.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
 
-            {/* Feature 3 */}
+            {/* Feature 3 - Strike Tasks for Today */}
             <div className="group relative">
               <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-yellow-500 to-amber-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Data Security</h3>
-                <p className="text-gray-600 leading-relaxed">Encrypted local storage keeps your data secure. Export/import functionality with complete privacy.</p>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Strike Tasks for Today</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">Complete your daily tasks with satisfying strike-through animations. Build momentum and stay motivated.</p>
+                <div className="rounded-xl overflow-hidden shadow-lg">
+                  <video 
+                    className="w-full h-48 object-cover" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                  >
+                    <source src="/videos/strike_final.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
 
-            {/* Feature 4 */}
+            {/* Feature 4 - Track Progress */}
             <div className="group relative">
               <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Auto-Start</h3>
-                <p className="text-gray-600 leading-relaxed">Windows autostart integration. Auto-save functionality and productivity tracking.</p>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Track Progress</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">Monitor your productivity with analytics, streaks, and insights. Your data stays secure with encrypted storage.</p>
+                <div className="rounded-xl overflow-hidden shadow-lg">
+                  <video 
+                    className="w-full h-48 object-cover" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                  >
+                    <source src="/videos/analytics_final.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
 
-            {/* Feature 5 */}
+            {/* Feature 5 - Import Tasks */}
             <div className="group relative">
               <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                  </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Analytics</h3>
-                <p className="text-gray-600 leading-relaxed">Dashboard with productivity stats, task completion streaks, and performance insights.</p>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Import Tasks</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">Seamlessly import your existing tasks from other platforms. Migrate your workflow without losing momentum.</p>
+                <div className="rounded-xl overflow-hidden shadow-lg">
+                  <video 
+                    className="w-full h-48 object-cover" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                  >
+                    <source src="/videos/import_final.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
 
-            {/* Feature 6 */}
+            {/* Feature 6 - Open on Startup */}
             <div className="group relative">
               <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Beautiful UI</h3>
-                <p className="text-gray-600 leading-relaxed">Glassmorphism effects, smooth animations, and meditation-app inspired design.</p>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">Open on Startup</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">Windows autostart integration ensures your productivity tool is always ready when you need it.</p>
+                <div className="rounded-xl overflow-hidden shadow-lg">
+                  <video 
+                    className="w-full h-48 object-cover" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                  >
+                    <source src="/videos/startup_final.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
           </div>
