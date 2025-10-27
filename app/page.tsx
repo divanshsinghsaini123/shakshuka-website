@@ -1,8 +1,49 @@
 'use client';
 
+import { useState } from 'react';
 import SplitText from '../components/SplitText';
 
 export default function Home() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Replace 'YOUR_FORMSPREE_FORM_ID' with your actual Formspree form ID
+      // Get it from: https://formspree.io/forms (after signing up)
+      const response = await fetch('https://formspree.io/f/xzzkdjpl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitStatus('idle'), 3000);
+      } else {
+        throw new Error('Failed to send');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FCF8F2' }}>
       {/* Hero Section */}
@@ -532,11 +573,15 @@ export default function Home() {
           </div>
           <div className="max-w-2xl mx-auto">
             <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl">
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                   <label className="block text-sm font-medium mb-2 text-amber-800">Name</label>
                   <input 
-                    type="text" 
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors bg-white/50 border-amber-300 focus:border-amber-500 focus:ring-amber-200" 
                     placeholder="Your name"
                   />
@@ -544,7 +589,11 @@ export default function Home() {
               <div>
                   <label className="block text-sm font-medium mb-2 text-amber-800">Email</label>
                   <input 
-                    type="email" 
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors bg-white/50 border-amber-300 focus:border-amber-500 focus:ring-amber-200" 
                     placeholder="your.email@example.com"
                   />
@@ -552,16 +601,34 @@ export default function Home() {
               <div>
                   <label className="block text-sm font-medium mb-2 text-amber-800">Message</label>
                   <textarea 
-                    rows={4} 
+                    rows={4}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors bg-white/50 border-amber-300 focus:border-amber-500 focus:ring-amber-200 resize-none" 
                     placeholder="Tell us what's on your mind..."
                   ></textarea>
               </div>
+              
+              {/* Success/Error Messages */}
+              {submitStatus === 'success' && (
+                <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                  ✅ Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                  ❌ Failed to send message. Please try again.
+                </div>
+              )}
+              
                 <button 
-                  type="submit" 
-                  className="w-full py-4 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
             </div>
