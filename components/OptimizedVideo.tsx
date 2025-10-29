@@ -33,16 +33,16 @@ export default function OptimizedVideo({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsIntersecting(true);
-            // Small delay before loading to avoid loading all videos at once
-            setTimeout(() => {
-              setShouldLoad(true);
-            }, 100);
+            // Load immediately when visible (no delay)
+            setShouldLoad(true);
+            // Disconnect observer once we start loading
+            observer.unobserve(entry.target);
           }
         });
       },
       {
-        rootMargin: '100px', // Start loading when 100px away from viewport
-        threshold: 0.1,
+        rootMargin: '300px', // Start loading when 300px away from viewport (earlier loading)
+        threshold: 0.01, // Even lower threshold for faster triggering
       }
     );
 
@@ -57,13 +57,21 @@ export default function OptimizedVideo({
     };
   }, []);
 
-  // Auto-play when video is loaded and in viewport
+  // Auto-play when video is loaded
   useEffect(() => {
-    if (shouldLoad && videoRef.current && isIntersecting && autoPlay) {
-      videoRef.current.play().catch((error) => {
-        // Auto-play might fail, that's okay
-        console.log('Video autoplay prevented:', error);
-      });
+    if (shouldLoad && videoRef.current && autoPlay && isIntersecting) {
+      const video = videoRef.current;
+      const playVideo = () => {
+        video.play().catch(() => {
+          // Ignore autoplay errors (browser policy)
+        });
+      };
+      
+      if (video.readyState >= 2) {
+        playVideo();
+      } else {
+        video.addEventListener('loadeddata', playVideo, { once: true });
+      }
     }
   }, [shouldLoad, isIntersecting, autoPlay]);
 
@@ -80,7 +88,7 @@ export default function OptimizedVideo({
           muted={muted}
           loop={loop}
           playsInline={playsInline}
-          preload="none"
+          preload="metadata"
           poster={posterPath}
         >
           {/* WebM format first (smaller, better compression) */}
