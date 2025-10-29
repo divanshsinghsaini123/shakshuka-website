@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import SplitText from '../components/SplitText';
+import OptimizedVideo from '../components/OptimizedVideo';
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -267,16 +268,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <video 
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src="/videos/Task_final.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <OptimizedVideo 
+                      src="Task_final"
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   {/* Animated progress bar */}
                   <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-amber-500 to-orange-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
@@ -299,16 +294,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <video 
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src="/videos/planner_final.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <OptimizedVideo 
+                      src="planner_final"
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   {/* Animated progress bar */}
                   <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-orange-500 to-red-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
@@ -331,16 +320,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <video 
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src="/videos/strike_final.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <OptimizedVideo 
+                      src="strike_final"
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   {/* Animated progress bar */}
                   <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-yellow-500 to-amber-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
@@ -363,16 +346,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <video 
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src="/videos/analytics_final.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <OptimizedVideo 
+                      src="analytics_final"
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   {/* Animated progress bar */}
                   <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-pink-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
@@ -395,16 +372,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <video 
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src="/videos/import_final.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <OptimizedVideo 
+                      src="import_final"
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   {/* Animated progress bar */}
                   <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
@@ -427,16 +398,10 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <video 
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src="/videos/startup_final.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <OptimizedVideo 
+                      src="startup_final"
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   {/* Animated progress bar */}
                   <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-green-500 to-teal-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
