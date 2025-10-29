@@ -2,8 +2,10 @@
 # Converts MP4 videos to WebM format (smaller size) and creates poster images
 # Usage: .\convert-videos.ps1
 
-$VIDEOS_DIR = "public\videos"
-$OUTPUT_DIR = "public\videos"
+# Resolve paths relative to this script's directory
+$RootDir = Split-Path -Path $PSScriptRoot -Parent
+$VIDEOS_DIR = Join-Path $RootDir "public\videos"
+$OUTPUT_DIR = Join-Path $RootDir "public\videos"
 
 Write-Host "Starting video optimization..." -ForegroundColor Green
 

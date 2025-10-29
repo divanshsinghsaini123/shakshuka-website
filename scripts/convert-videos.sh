@@ -4,8 +4,11 @@
 # Converts MP4 videos to WebM format (smaller size) and creates poster images
 # Usage: ./convert-videos.sh
 
-VIDEOS_DIR="public/videos"
-OUTPUT_DIR="public/videos"
+# Resolve paths relative to this script's directory
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+VIDEOS_DIR="$ROOT_DIR/public/videos"
+OUTPUT_DIR="$ROOT_DIR/public/videos"
 
 # Colors for output
 GREEN='\033[0;32m'
