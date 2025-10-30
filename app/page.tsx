@@ -1,13 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SplitText from '../components/SplitText';
+import { getDownloadCounts, incrementDownload } from '../lib/downloads';
+import DownloadStats from '../components/DownloadStats';
 import OptimizedVideo from '../components/OptimizedVideo';
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [downloadCounts, setDownloadCounts] = useState({ windows: 0, mac: 0, linux: 0 });
+
+  // Load download counts on mount
+  useEffect(() => {
+    let mounted = true;
+    getDownloadCounts().then(c => {
+      if (mounted) setDownloadCounts(c as any);
+    }).catch(() => {});
+    return () => { mounted = false; };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,15 +107,47 @@ export default function Home() {
               to={{ opacity: 1, y: 0 }}
               onLetterAnimationComplete={() => {}}
             />
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="group relative px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg hover:shadow-xl">
-                <span className="relative z-10">Download Now</span>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-600 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
-              <button className="px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:scale-105 border-2 border-amber-300 text-amber-600 hover:bg-amber-50">
-                Learn More
-          </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="https://github.com/admiralsuez/shakshuka-python/releases/download/v2.0/Shakshuka-Setup-v2.0.0-b3.exe"
+                className="px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl"
+                onClick={async () => {
+                  setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
+                  await incrementDownload('windows');
+                }}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                  </svg>
+                  Windows
+                </div>
+              </a>
+              <div className="px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+                <div className="flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  Mac - Coming Soon
+                </div>
+              </div>
+              <div className="px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+                <div className="flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  Linux - Coming Soon
+                </div>
+              </div>
             </div>
+            <div className="mt-8 flex justify-center">
+              <DownloadStats counts={downloadCounts} />
+            </div>
+            <a href="#features" className="mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors">
+              <svg className="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
@@ -117,20 +161,22 @@ export default function Home() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-amber-200 to-orange-200 border-2 border-amber-300 mb-8 shadow-lg">
-              <span className="text-base font-bold text-amber-800">Features</span>
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-amber-200 to-orange-200 border-2 border-amber-300 shadow-lg">
+                <span className="text-base font-bold text-amber-800">Features</span>
+              </div>
+              <SplitText 
+                text="Powerful Features"
+                tag="h2"
+                className="text-7xl font-black text-amber-800 drop-shadow-lg"
+                splitType="words"
+                delay={80}
+                duration={0.7}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                onLetterAnimationComplete={() => {}}
+              />
             </div>
-            <SplitText 
-              text="Powerful Features"
-              tag="h2"
-              className="text-7xl font-black mb-8 text-amber-800 drop-shadow-lg"
-              splitType="words"
-              delay={80}
-              duration={0.7}
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              onLetterAnimationComplete={() => {}}
-            />
             <p className="text-2xl text-center text-amber-700 max-w-4xl mx-auto leading-relaxed font-medium">
               Everything you need to organize your life and boost productivity
             </p>
@@ -231,20 +277,22 @@ export default function Home() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 mb-8 shadow-lg hover:scale-105 transition-transform duration-300">
-              <span className="text-base font-bold text-yellow-800">Process</span>
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 shadow-lg hover:scale-105 transition-transform duration-300">
+                <span className="text-base font-bold text-yellow-800">Process</span>
+              </div>
+              <SplitText 
+                text="How It Works"
+                tag="h2"
+                className="text-7xl font-black text-yellow-800 drop-shadow-lg"
+                splitType="words"
+                delay={60}
+                duration={0.8}
+                from={{ opacity: 0, y: 50 }}
+                to={{ opacity: 1, y: 0 }}
+                onLetterAnimationComplete={() => {}}
+              />
             </div>
-            <SplitText 
-              text="How It Works"
-              tag="h2"
-              className="text-7xl font-black mb-8 text-yellow-800 drop-shadow-lg"
-              splitType="words"
-              delay={60}
-              duration={0.8}
-              from={{ opacity: 0, y: 50 }}
-              to={{ opacity: 1, y: 0 }}
-              onLetterAnimationComplete={() => {}}
-            />
             <p className="text-2xl text-center text-yellow-700 max-w-4xl mx-auto leading-relaxed font-medium">
               Simple, intuitive, and powerful task management designed for modern productivity
             </p>
@@ -414,23 +462,25 @@ export default function Home() {
 
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+      <section id="pricing" className="py-32 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-orange-200 to-red-200 border-2 border-orange-300 mb-8 shadow-lg">
-              <span className="text-base font-bold text-orange-800">Open Source</span>
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-orange-200 to-red-200 border-2 border-orange-300 shadow-lg">
+                <span className="text-base font-bold text-orange-800">Open Source</span>
+              </div>
+              <SplitText 
+                text="Open Source & Support"
+                tag="h2"
+                className="text-7xl font-black text-orange-800 drop-shadow-lg"
+                splitType="words"
+                delay={90}
+                duration={0.8}
+                from={{ opacity: 0, y: 50 }}
+                to={{ opacity: 1, y: 0 }}
+                onLetterAnimationComplete={() => {}}
+              />
             </div>
-            <SplitText 
-              text="Open Source & Support"
-              tag="h2"
-              className="text-7xl font-black mb-8 text-orange-800 drop-shadow-lg"
-              splitType="words"
-              delay={90}
-              duration={0.8}
-              from={{ opacity: 0, y: 50 }}
-              to={{ opacity: 1, y: 0 }}
-              onLetterAnimationComplete={() => {}}
-            />
             <p className="text-2xl text-center text-orange-700 max-w-4xl mx-auto leading-relaxed font-medium">
               Free, open source, and community-driven development
             </p>
@@ -460,23 +510,25 @@ export default function Home() {
       </section>
 
       {/* Download Section */}
-      <section id="download" className="py-20" style={{ backgroundColor: '#FCF8F2' }}>
+      <section id="download" className="py-32" style={{ backgroundColor: '#FCF8F2' }}>
         <div className="container mx-auto px-4 text-center">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-red-200 to-pink-200 border-2 border-red-300 mb-8 shadow-lg">
-              <span className="text-base font-bold text-red-800">Download</span>
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-red-200 to-pink-200 border-2 border-red-300 shadow-lg">
+                <span className="text-base font-bold text-red-800">Download</span>
+              </div>
+              <SplitText 
+                text="Download Now"
+                tag="h2"
+                className="text-7xl font-black text-red-800 drop-shadow-lg"
+                splitType="words"
+                delay={60}
+                duration={0.7}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                onLetterAnimationComplete={() => {}}
+              />
             </div>
-            <SplitText 
-              text="Download Now"
-              tag="h2"
-              className="text-7xl font-black mb-8 text-red-800 drop-shadow-lg"
-              splitType="words"
-              delay={60}
-              duration={0.7}
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              onLetterAnimationComplete={() => {}}
-            />
             <p className="text-2xl text-red-700 max-w-4xl mx-auto leading-relaxed font-medium">
               Get started with Shakshuka today
             </p>
@@ -486,6 +538,10 @@ export default function Home() {
               href="https://github.com/admiralsuez/shakshuka-python/releases/download/v2.0/Shakshuka-Setup-v2.0.0-b3.exe"
               className="px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
               style={{ backgroundColor: '#E88D3F', color: 'white' }}
+              onClick={async () => {
+                setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
+                await incrementDownload('windows');
+              }}
             >
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -494,7 +550,7 @@ export default function Home() {
                 Download for Windows
               </div>
             </a>
-            <div className="px-8 py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }}>
+            <div className="px-8 py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -502,7 +558,7 @@ export default function Home() {
                 <span>Mac - Coming Soon</span>
               </div>
             </div>
-            <div className="px-8 py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }}>
+            <div className="px-8 py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -510,6 +566,9 @@ export default function Home() {
                 <span>Linux - Coming Soon</span>
               </div>
             </div>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <DownloadStats counts={downloadCounts} />
           </div>
         </div>
       </section>
