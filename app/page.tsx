@@ -74,11 +74,11 @@ export default function Home() {
         <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-gradient-to-r from-orange-200 to-red-200 rounded-full blur-lg opacity-50 animate-pulse"></div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="backdrop-blur-sm bg-white/10 rounded-3xl p-12 border border-white/20 shadow-2xl">
+          <div className="backdrop-blur-sm bg-white/10 rounded-3xl p-6 sm:p-8 md:p-12 border border-white/20 shadow-2xl">
           <SplitText 
               text="Shakshuka"
             tag="h1"
-              className="text-8xl font-bold mb-6 text-amber-800"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 text-amber-800"
             splitType="chars"
             delay={50}
             duration={0.8}
@@ -89,7 +89,7 @@ export default function Home() {
           <SplitText 
               text="Modern Task Management"
               tag="h2"
-              className="text-3xl font-light mb-8 text-amber-800"
+              className="text-xl sm:text-2xl md:text-3xl font-light mb-6 sm:mb-8 text-amber-800"
             splitType="words"
               delay={200}
             duration={0.6}
@@ -99,7 +99,7 @@ export default function Home() {
           />
             <SplitText 
               text="Find your flow. Transform chaos into calm with mindful task management that nurtures focus and inner peace."
-              className="text-lg mb-12 max-w-3xl mx-auto text-amber-700 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-amber-700 leading-relaxed px-4"
               splitType="words"
               delay={300}
               duration={0.6}
@@ -107,10 +107,10 @@ export default function Home() {
               to={{ opacity: 1, y: 0 }}
               onLetterAnimationComplete={() => {}}
             />
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <a 
                 href="https://github.com/admiralsuez/shakshuka-python/releases/download/v2.0/Shakshuka-Setup-v2.0.0-b3.exe"
-                className="px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl"
                 onClick={async () => {
                   setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
                   await incrementDownload('windows');
@@ -123,28 +123,28 @@ export default function Home() {
                   Windows
                 </div>
               </a>
-              <div className="px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
-                  Mac - Coming Soon
+                  <span className="text-xs sm:text-base">Mac - Coming Soon</span>
                 </div>
               </div>
-              <div className="px-6 py-3 rounded-full text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
-                  Linux - Coming Soon
+                  <span className="text-xs sm:text-base">Linux - Coming Soon</span>
                 </div>
               </div>
             </div>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-6 sm:mt-8 flex justify-center px-4">
               <DownloadStats counts={downloadCounts} />
             </div>
-            <a href="#features" className="mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors">
-              <svg className="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="#features" className="mt-6 sm:mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors">
+              <svg className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </a>
@@ -160,15 +160,15 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center gap-6 mb-8">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-amber-200 to-orange-200 border-2 border-amber-300 shadow-lg">
-                <span className="text-base font-bold text-amber-800">Features</span>
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-amber-200 to-orange-200 border-2 border-amber-300 shadow-lg">
+                <span className="text-sm sm:text-base font-bold text-amber-800">Features</span>
               </div>
               <SplitText 
                 text="Powerful Features"
                 tag="h2"
-                className="text-7xl font-black text-amber-800 drop-shadow-lg"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-amber-800 drop-shadow-lg"
                 splitType="words"
                 delay={80}
                 duration={0.7}
@@ -177,7 +177,7 @@ export default function Home() {
                 onLetterAnimationComplete={() => {}}
               />
             </div>
-            <p className="text-2xl text-center text-amber-700 max-w-4xl mx-auto leading-relaxed font-medium">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-amber-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               Everything you need to organize your life and boost productivity
             </p>
           </div>
@@ -276,15 +276,15 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center gap-6 mb-8">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 shadow-lg hover:scale-105 transition-transform duration-300">
-                <span className="text-base font-bold text-yellow-800">Process</span>
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 shadow-lg hover:scale-105 transition-transform duration-300">
+                <span className="text-sm sm:text-base font-bold text-yellow-800">Process</span>
               </div>
               <SplitText 
                 text="How It Works"
                 tag="h2"
-                className="text-7xl font-black text-yellow-800 drop-shadow-lg"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-yellow-800 drop-shadow-lg"
                 splitType="words"
                 delay={60}
                 duration={0.8}
@@ -293,7 +293,7 @@ export default function Home() {
                 onLetterAnimationComplete={() => {}}
               />
             </div>
-            <p className="text-2xl text-center text-yellow-700 max-w-4xl mx-auto leading-relaxed font-medium">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-yellow-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               Simple, intuitive, and powerful task management designed for modern productivity
             </p>
           </div>
@@ -464,15 +464,15 @@ export default function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="py-32 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center gap-6 mb-8">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-orange-200 to-red-200 border-2 border-orange-300 shadow-lg">
-                <span className="text-base font-bold text-orange-800">Open Source</span>
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-orange-200 to-red-200 border-2 border-orange-300 shadow-lg">
+                <span className="text-sm sm:text-base font-bold text-orange-800">Open Source</span>
               </div>
               <SplitText 
                 text="Open Source & Support"
                 tag="h2"
-                className="text-7xl font-black text-orange-800 drop-shadow-lg"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-orange-800 drop-shadow-lg"
                 splitType="words"
                 delay={90}
                 duration={0.8}
@@ -481,7 +481,7 @@ export default function Home() {
                 onLetterAnimationComplete={() => {}}
               />
             </div>
-            <p className="text-2xl text-center text-orange-700 max-w-4xl mx-auto leading-relaxed font-medium">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-orange-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               Free, open source, and community-driven development
             </p>
           </div>
@@ -512,15 +512,15 @@ export default function Home() {
       {/* Download Section */}
       <section id="download" className="py-32" style={{ backgroundColor: '#FCF8F2' }}>
         <div className="container mx-auto px-4 text-center">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center gap-6 mb-8">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-red-200 to-pink-200 border-2 border-red-300 shadow-lg">
-                <span className="text-base font-bold text-red-800">Download</span>
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-200 to-pink-200 border-2 border-red-300 shadow-lg">
+                <span className="text-sm sm:text-base font-bold text-red-800">Download</span>
               </div>
               <SplitText 
                 text="Download Now"
                 tag="h2"
-                className="text-7xl font-black text-red-800 drop-shadow-lg"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-red-800 drop-shadow-lg"
                 splitType="words"
                 delay={60}
                 duration={0.7}
@@ -529,14 +529,14 @@ export default function Home() {
                 onLetterAnimationComplete={() => {}}
               />
             </div>
-            <p className="text-2xl text-red-700 max-w-4xl mx-auto leading-relaxed font-medium">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-red-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               Get started with Shakshuka today
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-4xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-4xl mx-auto">
             <a 
               href="https://github.com/admiralsuez/shakshuka-python/releases/download/v2.0/Shakshuka-Setup-v2.0.0-b3.exe"
-              className="px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
+              className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
               style={{ backgroundColor: '#E88D3F', color: 'white' }}
               onClick={async () => {
                 setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
@@ -544,30 +544,30 @@ export default function Home() {
               }}
             >
               <div className="flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
-                Download for Windows
+                <span className="text-xs sm:text-base">Download for Windows</span>
               </div>
             </a>
-            <div className="px-8 py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
               <div className="flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <span>Mac - Coming Soon</span>
+                <span className="text-xs sm:text-base">Mac - Coming Soon</span>
               </div>
             </div>
-            <div className="px-8 py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
               <div className="flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
-                <span>Linux - Coming Soon</span>
+                <span className="text-xs sm:text-base">Linux - Coming Soon</span>
               </div>
             </div>
           </div>
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 sm:mt-8 flex justify-center px-4">
             <DownloadStats counts={downloadCounts} />
           </div>
         </div>
