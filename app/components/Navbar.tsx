@@ -1,10 +1,37 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    
+    // Close mobile menu if open
+    setIsMenuOpen(false);
+    
+    // Find the target element
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Calculate offset for fixed navbar (navbar height + some padding)
+      const navbarHeight = 64; // h-16 = 4rem = 64px
+      const offset = navbarHeight + 20; // Extra 20px padding
+      
+      // Get element position
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      // Temporarily disable smooth scroll, jump instantly, then re-enable if needed
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, offsetPosition);
+      // Force a reflow to ensure instant jump
+      void document.documentElement.offsetHeight;
+      // Re-enable smooth scroll for other navigation (optional)
+      // document.documentElement.style.scrollBehavior = '';
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 border-b border-amber-200/30 text-amber-900 shadow-lg">
@@ -25,22 +52,22 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a href="#hero" className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
                 Home
               </a>
-              <a href="#features" className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#features" onClick={(e) => handleNavClick(e, 'features')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
                 Features
               </a>
-              <a href="#explainer" className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#explainer" onClick={(e) => handleNavClick(e, 'explainer')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
                 How It Works
               </a>
-              <a href="#pricing" className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#pricing" onClick={(e) => handleNavClick(e, 'pricing')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
                 Pricing
               </a>
-              <a href="#contact" className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
+              <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
                 Contact
               </a>
-              <a href="#download" className="px-6 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ backgroundColor: '#E88D3F', color: 'white' }}>
+              <a href="#download" onClick={(e) => handleNavClick(e, 'download')} className="px-6 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ backgroundColor: '#E88D3F', color: 'white' }}>
                 Download
               </a>
             </div>
@@ -68,22 +95,22 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 backdrop-blur-md bg-white/90 border-t border-amber-200/30">
-            <a href="#hero" className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
+            <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
               Home
             </a>
-            <a href="#features" className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
+            <a href="#features" onClick={(e) => handleNavClick(e, 'features')} className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
               Features
             </a>
-            <a href="#explainer" className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
+            <a href="#explainer" onClick={(e) => handleNavClick(e, 'explainer')} className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
               How It Works
             </a>
-            <a href="#pricing" className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
+            <a href="#pricing" onClick={(e) => handleNavClick(e, 'pricing')} className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
               Pricing
             </a>
-            <a href="#contact" className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
+            <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
               Contact
             </a>
-            <a href="#download" className="block px-3 py-2 rounded-full text-base font-medium transition-all duration-200" style={{ backgroundColor: '#E88D3F', color: 'white' }}>
+            <a href="#download" onClick={(e) => handleNavClick(e, 'download')} className="block px-3 py-2 rounded-full text-base font-medium transition-all duration-200" style={{ backgroundColor: '#E88D3F', color: 'white' }}>
               Download
             </a>
           </div>
