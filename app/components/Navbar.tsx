@@ -64,10 +64,8 @@ export default function Navbar() {
               <a href="#pricing" onClick={(e) => handleNavClick(e, 'pricing')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
                 Pricing
               </a>
-              <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="text-amber-800 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors">
-                Contact
-              </a>
-              <a href="#download" onClick={(e) => handleNavClick(e, 'download')} className="px-6 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ backgroundColor: '#E88D3F', color: 'white' }}>
+              
+              <a href="#download" onClick={(e) => handleNavClick(e, 'download')} className="px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-warm-orange text-white">
                 Download
               </a>
             </div>
@@ -110,7 +108,7 @@ export default function Navbar() {
             <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="text-amber-800 hover:text-amber-600 block px-3 py-2 text-base font-medium transition-colors">
               Contact
             </a>
-            <a href="#download" onClick={(e) => handleNavClick(e, 'download')} className="block px-3 py-2 rounded-full text-base font-medium transition-all duration-200" style={{ backgroundColor: '#E88D3F', color: 'white' }}>
+            <a href="#download" onClick={(e) => handleNavClick(e, 'download')} className="block px-3 py-2 rounded-full text-base font-medium transition-all duration-200 bg-warm-orange text-white">
               Download
             </a>
           </div>

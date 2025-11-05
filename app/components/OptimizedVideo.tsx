@@ -62,8 +62,16 @@ export default function OptimizedVideo({
     if (shouldLoad && videoRef.current && autoPlay && isIntersecting) {
       const video = videoRef.current;
       const playVideo = () => {
-        video.play().catch(() => {
-          // Ignore autoplay errors (browser policy)
+        video.play().catch((error) => {
+          // Autoplay errors are expected due to browser policies (e.g., user hasn't interacted)
+          // Only log if it's not a NotAllowedError (which is the common autoplay policy error)
+          if (error instanceof Error && error.name !== 'NotAllowedError') {
+            console.warn('[OptimizedVideo] Video play error (non-autoplay):', {
+              src,
+              error: error.message,
+              name: error.name
+            });
+          }
         });
       };
       
@@ -73,7 +81,7 @@ export default function OptimizedVideo({
         video.addEventListener('loadeddata', playVideo, { once: true });
       }
     }
-  }, [shouldLoad, isIntersecting, autoPlay]);
+  }, [shouldLoad, isIntersecting, autoPlay, src]);
 
   // Generate poster path if not provided
   const posterPath = poster || `/videos/${src}_poster.jpg`;
@@ -90,6 +98,23 @@ export default function OptimizedVideo({
           playsInline={playsInline}
           preload="metadata"
           poster={posterPath}
+          onError={(e) => {
+            const video = e.currentTarget;
+            const error = video.error;
+            if (error) {
+              console.error('[OptimizedVideo] Video loading error:', {
+                src,
+                errorCode: error.code,
+                errorMessage: error.message,
+                code: {
+                  1: 'MEDIA_ERR_ABORTED',
+                  2: 'MEDIA_ERR_NETWORK',
+                  3: 'MEDIA_ERR_DECODE',
+                  4: 'MEDIA_ERR_SRC_NOT_SUPPORTED'
+                }[error.code] || 'UNKNOWN'
+              });
+            }
+          }}
         >
           {/* WebM format first (smaller, better compression) */}
           <source src={`/videos/${src}.webm`} type="video/webm" />
@@ -109,6 +134,10 @@ export default function OptimizedVideo({
               className="w-full h-full object-cover"
               loading="lazy"
               onError={(e) => {
+                console.warn('[OptimizedVideo] Poster image failed to load:', {
+                  src,
+                  posterPath
+                });
                 // Hide image if poster doesn't exist yet
                 e.currentTarget.style.display = 'none';
               }}

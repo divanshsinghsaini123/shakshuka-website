@@ -1,65 +1,146 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import SplitText from '../components/SplitText';
+import SplitText from './components/SplitText';
+import Feature from './components/Feature';
+import HeroFeature from './components/HeroFeature';
 import { getDownloadCounts, incrementDownload } from '../lib/downloads';
-import DownloadStats from '../components/DownloadStats';
-import OptimizedVideo from '../components/OptimizedVideo';
+import DownloadStats from './components/DownloadStats';
+import ErrorToast from './components/ErrorToast';
 
 export default function Home() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [downloadCounts, setDownloadCounts] = useState({ windows: 0, mac: 0, linux: 0 });
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [toastError, setToastError] = useState<string | null>(null);
 
   // Load download counts on mount
   useEffect(() => {
     let mounted = true;
-    getDownloadCounts().then(c => {
-      if (mounted) setDownloadCounts(c as any);
-    }).catch(() => {});
+    setIsLoading(true);
+    setError(null);
+    
+    getDownloadCounts()
+      .then(c => {
+        if (mounted) {
+          setDownloadCounts(c);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (mounted) {
+          const errorMessage = err instanceof Error ? err.message : 'Failed to load download statistics';
+          console.error('[Home] Error loading download counts:', err);
+          setError(errorMessage);
+          setIsLoading(false);
+        }
+      });
+    
     return () => { mounted = false; };
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      // Replace 'YOUR_FORMSPREE_FORM_ID' with your actual Formspree form ID
-      // Get it from: https://formspree.io/forms (after signing up)
-      const response = await fetch('https://formspree.io/f/xzzkdjpl', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitStatus('idle'), 3000);
-      } else {
-        throw new Error('Failed to send');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus('idle'), 3000);
-    } finally {
-      setIsSubmitting(false);
+  const features = [
+    {
+      title: 'Task Management',
+      description: 'Create, edit, and organize tasks with beautiful drag-and-drop interface. Set priorities, due dates, and categories.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />,
+      gradient: 'bg-gradient-to-r from-amber-400 to-amber-500'
+    },
+    {
+      title: 'Daily Planner',
+      description: 'Visual task scheduling with hourly time slots. Drag-and-drop interface for intuitive planning.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />,
+      gradient: 'bg-gradient-to-r from-orange-400 to-orange-500'
+    },
+    {
+      title: 'Data Security',
+      description: 'Encrypted local storage keeps your data secure. Export/import functionality with complete privacy.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />,
+      gradient: 'bg-gradient-to-r from-yellow-500 to-yellow-600'
+    },
+    {
+      title: 'Auto-Start',
+      description: 'Windows autostart integration. Auto-save functionality and productivity tracking.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />,
+      gradient: 'bg-gradient-to-r from-amber-500 to-orange-500'
+    },
+    {
+      title: 'Analytics',
+      description: 'Dashboard with productivity stats, task completion streaks, and performance insights.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />,
+      gradient: 'bg-gradient-to-r from-orange-500 to-amber-500'
+    },
+    {
+      title: 'Beautiful UI',
+      description: 'Glassmorphism effects, smooth animations, and meditation-app inspired design.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />,
+      gradient: 'bg-gradient-to-r from-yellow-400 to-amber-500'
+    },
+  ];
+  const heroFeatures = [
+    {
+      number: 1,
+      title: 'Create Tasks',
+      description: 'Add tasks with priorities, categories, and due dates. Organize your work with beautiful drag-and-drop interface.',
+      videoSrc: 'Task_final',
+      animationDelay: 0.1,
+      gradientFrom: 'from-amber-500',
+      gradientTo: 'to-orange-600',
+      hoverTextColor: 'group-hover:text-amber-800'
+    },
+    {
+      number: 2,
+      title: 'Plan Your Day',
+      description: 'Schedule tasks in your daily planner with hourly time slots. Visual planning made simple and intuitive.',
+      videoSrc: 'planner_final',
+      animationDelay: 0.2,
+      gradientFrom: 'from-orange-500',
+      gradientTo: 'to-red-600',
+      hoverTextColor: 'group-hover:text-orange-800'
+    },
+    {
+      number: 3,
+      title: 'Strike Tasks',
+      description: 'Complete your daily tasks with satisfying strike-through animations. Build momentum and stay motivated.',
+      videoSrc: 'strike_final',
+      animationDelay: 0.3,
+      gradientFrom: 'from-yellow-500',
+      gradientTo: 'to-amber-600',
+      hoverTextColor: 'group-hover:text-yellow-800'
+    },
+    {
+      number: 4,
+      title: 'Track Progress',
+      description: 'Monitor your productivity with analytics, streaks, and insights. Your data stays secure with encrypted storage.',
+      videoSrc: 'analytics_final',
+      animationDelay: 0.4,
+      gradientFrom: 'from-red-500',
+      gradientTo: 'to-pink-600',
+      hoverTextColor: 'group-hover:text-red-800'
+    },
+    {
+      number: 5,
+      title: 'Import Tasks',
+      description: 'Seamlessly import your existing tasks from other platforms. Migrate your workflow without losing momentum.',
+      videoSrc: 'import_final',
+      animationDelay: 0.5,
+      gradientFrom: 'from-purple-500',
+      gradientTo: 'to-indigo-600',
+      hoverTextColor: 'group-hover:text-purple-800'
+    },
+    {
+      number: 6,
+      title: 'Auto-Start',
+      description: 'Windows autostart integration ensures your productivity tool is always ready when you need it.',
+      videoSrc: 'startup_final',
+      animationDelay: 0.6,
+      gradientFrom: 'from-green-500',
+      gradientTo: 'to-teal-600',
+      hoverTextColor: 'group-hover:text-green-800'
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
+  ];
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#FCF8F2' }}>
-      {/* Hero Section */}
+    <div className="min-h-screen bg-cream">
+      {/* Hero FeatureSection */}
       <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
@@ -109,11 +190,19 @@ export default function Home() {
             />
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <a 
-                href="https://github.com/admiralsuez/shakshuka-python/releases/download/v2.0/Shakshuka-Setup-v2.0.0-b3.exe"
+                href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
                 className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl"
-                onClick={async () => {
+                onClick={async (e) => {
+                  e.preventDefault();
+                  // Optimistically update UI
                   setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
-                  await incrementDownload('windows');
+                  
+                  const result = await incrementDownload('windows');
+                  if (!result.success && result.error) {
+                    // Revert optimistic update on error
+                    setDownloadCounts(prev => ({ ...prev, windows: Math.max(0, prev.windows - 1) }));
+                    setToastError(result.error.message || 'Failed to track download. Please try again.');
+                  }
                 }}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -123,7 +212,7 @@ export default function Home() {
                   Windows
                 </div>
               </a>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed pointer-events-none" aria-disabled="true" title="Coming soon">
                 <div className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -131,7 +220,7 @@ export default function Home() {
                   <span className="text-xs sm:text-base">Mac - Coming Soon</span>
                 </div>
               </div>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed opacity-70 cursor-not-allowed pointer-events-none" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed pointer-events-none" aria-disabled="true" title="Coming soon">
                 <div className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -141,7 +230,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-6 sm:mt-8 flex justify-center px-4">
-              <DownloadStats counts={downloadCounts} />
+              <DownloadStats counts={downloadCounts} isLoading={isLoading} error={error} />
             </div>
             <a href="#features" className="mt-6 sm:mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors">
               <svg className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,83 +272,11 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="group relative">
-              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Task Management</h3>
-                <p className="text-gray-600 leading-relaxed">Create, edit, and organize tasks with beautiful drag-and-drop interface. Set priorities, due dates, and categories.</p>
-              </div>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="group relative">
-              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Daily Planner</h3>
-                <p className="text-gray-600 leading-relaxed">Visual task scheduling with hourly time slots. Drag-and-drop interface for intuitive planning.</p>
-              </div>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="group relative">
-              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-yellow-500 to-amber-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Data Security</h3>
-                <p className="text-gray-600 leading-relaxed">Encrypted local storage keeps your data secure. Export/import functionality with complete privacy.</p>
-              </div>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="group relative">
-              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Auto-Start</h3>
-                <p className="text-gray-600 leading-relaxed">Windows autostart integration. Auto-save functionality and productivity tracking.</p>
-              </div>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="group relative">
-              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Analytics</h3>
-                <p className="text-gray-600 leading-relaxed">Dashboard with productivity stats, task completion streaks, and performance insights.</p>
-              </div>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="group relative">
-              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-8 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Beautiful UI</h3>
-                <p className="text-gray-600 leading-relaxed">Glassmorphism effects, smooth animations, and meditation-app inspired design.</p>
-              </div>
-            </div>
+            {
+              features.map((feature, index) =>(
+                <Feature key={index} title={feature.title} description={feature.description} icon={feature.icon} gradient={feature.gradient} />
+              ))
+            }
           </div>
         </div>
       </section>
@@ -300,161 +317,19 @@ export default function Home() {
           
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-              {/* Feature 1 - Create Tasks with Video */}
-              <div className="group opacity-0 translate-y-12 transition-all duration-800 ease-out" 
-                   style={{ animation: 'fadeInUp 0.8s ease-out 0.1s forwards' }}>
-                <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30 relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="flex items-start space-x-4 mb-4 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <span className="text-white font-bold text-lg">1</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-amber-800 transition-colors duration-300">Create Tasks</h3>
-                      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Add tasks with priorities, categories, and due dates. Organize your work with beautiful drag-and-drop interface.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <OptimizedVideo 
-                      src="Task_final"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  {/* Animated progress bar */}
-                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-amber-500 to-orange-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
-                </div>
-              </div>
-
-              {/* Feature 2 - Plan Your Day with Video */}
-              <div className="group opacity-0 translate-y-12 transition-all duration-800 ease-out" 
-                   style={{ animation: 'fadeInUp 0.8s ease-out 0.2s forwards' }}>
-                <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30 relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="flex items-start space-x-4 mb-4 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <span className="text-white font-bold text-lg">2</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-orange-800 transition-colors duration-300">Plan Your Day</h3>
-                      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Schedule tasks in your daily planner with hourly time slots. Visual planning made simple and intuitive.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <OptimizedVideo 
-                      src="planner_final"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  {/* Animated progress bar */}
-                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-orange-500 to-red-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
-                </div>
-              </div>
-
-              {/* Feature 3 - Strike Tasks with Video */}
-              <div className="group opacity-0 translate-y-12 transition-all duration-800 ease-out" 
-                   style={{ animation: 'fadeInUp 0.8s ease-out 0.3s forwards' }}>
-                <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30 relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-amber-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="flex items-start space-x-4 mb-4 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <span className="text-white font-bold text-lg">3</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-yellow-800 transition-colors duration-300">Strike Tasks</h3>
-                      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Complete your daily tasks with satisfying strike-through animations. Build momentum and stay motivated.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <OptimizedVideo 
-                      src="strike_final"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  {/* Animated progress bar */}
-                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-yellow-500 to-amber-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
-                </div>
-              </div>
-
-              {/* Feature 4 - Track Progress with Video */}
-              <div className="group opacity-0 translate-y-12 transition-all duration-800 ease-out" 
-                   style={{ animation: 'fadeInUp 0.8s ease-out 0.4s forwards' }}>
-                <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30 relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-pink-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="flex items-start space-x-4 mb-4 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <span className="text-white font-bold text-lg">4</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-red-800 transition-colors duration-300">Track Progress</h3>
-                      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Monitor your productivity with analytics, streaks, and insights. Your data stays secure with encrypted storage.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <OptimizedVideo 
-                      src="analytics_final"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  {/* Animated progress bar */}
-                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-pink-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
-                </div>
-              </div>
-
-              {/* Feature 5 - Import Tasks with Video */}
-              <div className="group opacity-0 translate-y-12 transition-all duration-800 ease-out" 
-                   style={{ animation: 'fadeInUp 0.8s ease-out 0.5s forwards' }}>
-                <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30 relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="flex items-start space-x-4 mb-4 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <span className="text-white font-bold text-lg">5</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-purple-800 transition-colors duration-300">Import Tasks</h3>
-                      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Seamlessly import your existing tasks from other platforms. Migrate your workflow without losing momentum.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <OptimizedVideo 
-                      src="import_final"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  {/* Animated progress bar */}
-                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
-                </div>
-              </div>
-
-              {/* Feature 6 - Auto-Start with Video */}
-              <div className="group opacity-0 translate-y-12 transition-all duration-800 ease-out" 
-                   style={{ animation: 'fadeInUp 0.8s ease-out 0.6s forwards' }}>
-                <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-white/30 relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-teal-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="flex items-start space-x-4 mb-4 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <span className="text-white font-bold text-lg">6</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-green-800 transition-colors duration-300">Auto-Start</h3>
-                      <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Windows autostart integration ensures your productivity tool is always ready when you need it.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    <OptimizedVideo 
-                      src="startup_final"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  {/* Animated progress bar */}
-                  <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-green-500 to-teal-600 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
-                </div>
-              </div>
+              {heroFeatures.map((feature) => (
+                <HeroFeature
+                  key={feature.number}
+                  number={feature.number}
+                  title={feature.title}
+                  description={feature.description}
+                  videoSrc={feature.videoSrc}
+                  animationDelay={feature.animationDelay}
+                  gradientFrom={feature.gradientFrom}
+                  gradientTo={feature.gradientTo}
+                  hoverTextColor={feature.hoverTextColor}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -486,14 +361,14 @@ export default function Home() {
             </p>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div className="rounded-lg shadow-lg p-8 text-center" style={{ backgroundColor: 'white' }}>
-              <h3 className="text-2xl font-semibold mb-4" style={{ color: '#5C2D2D' }}>Free & Open Source</h3>
-              <p className="mb-8" style={{ color: '#7A5C5C' }}>
+            <div className="rounded-lg shadow-lg p-8 text-center bg-white">
+              <h3 className="text-2xl font-semibold mb-4 text-primary-brown">Free & Open Source</h3>
+              <p className="mb-8 text-secondary-brown">
                 Our product is completely free and open source. We believe in transparency and community-driven development.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="https://github.com/admiralsuez/shakshuka-python/tree/release"
+                  href={process.env['NEXT_PUBLIC_GITHUB_URL']}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl"
@@ -510,7 +385,7 @@ export default function Home() {
       </section>
 
       {/* Download Section */}
-      <section id="download" className="py-32" style={{ backgroundColor: '#FCF8F2' }}>
+      <section id="download" className="py-32 bg-cream">
         <div className="container mx-auto px-4 text-center">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
@@ -535,12 +410,19 @@ export default function Home() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-4xl mx-auto">
             <a 
-              href="https://github.com/admiralsuez/shakshuka-python/releases/download/v2.0/Shakshuka-Setup-v2.0.0-b3.exe"
-              className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
-              style={{ backgroundColor: '#E88D3F', color: 'white' }}
-              onClick={async () => {
+                href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
+              className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base bg-warm-orange text-white"
+              onClick={async (e) => {
+                e.preventDefault();
+                // Optimistically update UI
                 setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
-                await incrementDownload('windows');
+                
+                const result = await incrementDownload('windows');
+                if (!result.success && result.error) {
+                  // Revert optimistic update on error
+                  setDownloadCounts(prev => ({ ...prev, windows: Math.max(0, prev.windows - 1) }));
+                  setToastError(result.error.message || 'Failed to track download. Please try again.');
+                }
               }}
             >
               <div className="flex items-center justify-center gap-2">
@@ -550,7 +432,7 @@ export default function Home() {
                 <span className="text-xs sm:text-base">Download for Windows</span>
               </div>
             </a>
-            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" aria-disabled="true" title="Coming soon">
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -558,7 +440,7 @@ export default function Home() {
                 <span className="text-xs sm:text-base">Mac - Coming Soon</span>
               </div>
             </div>
-            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" style={{ borderColor: '#E88D3F', color: '#7A5C5C' }} aria-disabled="true" title="Coming soon">
+            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" aria-disabled="true" title="Coming soon">
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -568,13 +450,21 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-6 sm:mt-8 flex justify-center px-4">
-            <DownloadStats counts={downloadCounts} />
+            <DownloadStats counts={downloadCounts} isLoading={isLoading} error={error} />
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
       
+      {/* Error Toast */}
+      {toastError && (
+        <ErrorToast
+          message={toastError}
+          onClose={() => setToastError(null)}
+          duration={5000}
+        />
+      )}
     </div>
   );
 }

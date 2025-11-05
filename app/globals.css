@@ -44,6 +44,12 @@ html {
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Brand colors */
+  --color-cream: #FCF8F2;
+  --color-warm-orange: #E88D3F;
+  --color-primary-brown: #5C2D2D;
+  --color-secondary-brown: #7A5C5C;
 }
 
 :root {
@@ -124,21 +130,25 @@ html {
   }
 }
 
-/* Custom color classes for the website */
+/* Brand color utilities - using CSS variables from theme */
 .text-primary-brown {
-  color: #5C2D2D;
+  color: var(--color-primary-brown);
 }
 
 .text-secondary-brown {
-  color: #7A5C5C;
+  color: var(--color-secondary-brown);
 }
 
 .bg-warm-orange {
-  background-color: #E88D3F;
+  background-color: var(--color-warm-orange);
 }
 
 .bg-cream {
-  background-color: #FCF8F2;
+  background-color: var(--color-cream);
+}
+
+.border-warm-orange {
+  border-color: var(--color-warm-orange);
 }
 
 /* Glassmorphism utilities */
@@ -231,3 +241,24 @@ html {
 .delay-600 { animation-delay: 0.6s; }
 .delay-700 { animation-delay: 0.7s; }
 .delay-800 { animation-delay: 0.8s; }
+
+/* Fade in up animation with dynamic delay */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out var(--animation-delay, 0s) forwards;
+}
+
+/* Slide in from right animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
