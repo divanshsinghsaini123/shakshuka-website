@@ -10,6 +10,7 @@ interface OptimizedVideoProps {
   muted?: boolean;
   loop?: boolean;
   playsInline?: boolean;
+  "aria-label"?: string;
 }
 
 export default function OptimizedVideo({
@@ -20,6 +21,7 @@ export default function OptimizedVideo({
   muted = true,
   loop = true,
   playsInline = true,
+  "aria-label": ariaLabel,
 }: OptimizedVideoProps) {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -98,6 +100,7 @@ export default function OptimizedVideo({
           playsInline={playsInline}
           preload="metadata"
           poster={posterPath}
+          aria-label={ariaLabel || `Video demonstration: ${src}`}
           onError={(e) => {
             const video = e.currentTarget;
             const error = video.error;
@@ -120,17 +123,19 @@ export default function OptimizedVideo({
           <source src={`/videos/${src}.webm`} type="video/webm" />
           {/* MP4 as fallback for older browsers */}
           <source src={`/videos/${src}.mp4`} type="video/mp4" />
-          Your browser does not support the video tag.
+          <p>Your browser does not support the video tag. Please update your browser to view this content.</p>
         </video>
       ) : (
         // Show poster or placeholder while not loaded
         <div
           className={`${className} bg-gray-200 flex items-center justify-center overflow-hidden`}
+          aria-label={ariaLabel || `Video preview: ${src}`}
+          role="img"
         >
           {posterPath && (
             <img
               src={posterPath}
-              alt="Video preview"
+              alt={ariaLabel ? `${ariaLabel} - Preview` : `Video preview: ${src}`}
               className="w-full h-full object-cover"
               loading="lazy"
               onError={(e) => {

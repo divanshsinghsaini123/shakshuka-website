@@ -188,10 +188,10 @@ export default function Home() {
               to={{ opacity: 1, y: 0 }}
               onLetterAnimationComplete={() => {}}
             />
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center" role="group" aria-label="Download options">
               <a 
                 href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
-                className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                 onClick={async (e) => {
                   e.preventDefault();
                   // Optimistically update UI
@@ -204,25 +204,26 @@ export default function Home() {
                     setToastError(result.error.message || 'Failed to track download. Please try again.');
                   }
                 }}
+                aria-label="Download Shakshuka for Windows"
               >
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                   </svg>
                   Windows
                 </div>
               </a>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed pointer-events-none" aria-disabled="true" title="Coming soon">
+              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed" aria-disabled="true" aria-label="Mac version coming soon" role="status">
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                   <span className="text-xs sm:text-base">Mac - Coming Soon</span>
                 </div>
               </div>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed pointer-events-none" aria-disabled="true" title="Coming soon">
+              <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed" aria-disabled="true" aria-label="Linux version coming soon" role="status">
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
                   <span className="text-xs sm:text-base">Linux - Coming Soon</span>
@@ -232,8 +233,12 @@ export default function Home() {
             <div className="mt-6 sm:mt-8 flex justify-center px-4">
               <DownloadStats counts={downloadCounts} isLoading={isLoading} error={error} />
             </div>
-            <a href="#features" className="mt-6 sm:mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors">
-              <svg className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a 
+              href="#features" 
+              className="mt-6 sm:mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-lg p-2"
+              aria-label="Scroll to features section"
+            >
+              <svg className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </a>
@@ -367,15 +372,19 @@ export default function Home() {
                 Our product is completely free and open source. We believe in transparency and community-driven development.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href={process.env['NEXT_PUBLIC_GITHUB_URL']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl"
+              <a 
+                href={process.env['NEXT_PUBLIC_GITHUB_URL']}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                aria-label="View Shakshuka on GitHub (opens in new tab)"
+              >
+                View on GitHub
+              </a>
+                <button 
+                  className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-orange-500 to-red-600 text-white font-medium shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                  aria-label="Support Shakshuka development"
                 >
-                  View on GitHub
-                </a>
-                <button className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-orange-500 to-red-600 text-white font-medium shadow-lg hover:shadow-xl">
                   Support Development
                 </button>
               </div>
@@ -408,10 +417,10 @@ export default function Home() {
               Get started with Shakshuka today
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-4xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-4xl mx-auto" role="group" aria-label="Download options">
             <a 
                 href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
-              className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base bg-warm-orange text-white"
+              className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base bg-warm-orange text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
               onClick={async (e) => {
                 e.preventDefault();
                 // Optimistically update UI
@@ -424,25 +433,26 @@ export default function Home() {
                   setToastError(result.error.message || 'Failed to track download. Please try again.');
                 }
               }}
+              aria-label="Download Shakshuka for Windows"
             >
               <div className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
                 <span className="text-xs sm:text-base">Download for Windows</span>
               </div>
             </a>
-            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" aria-disabled="true" title="Coming soon">
+            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed text-sm sm:text-base" aria-disabled="true" aria-label="Mac version coming soon" role="status">
               <div className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
                 <span className="text-xs sm:text-base">Mac - Coming Soon</span>
               </div>
             </div>
-            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed pointer-events-none text-sm sm:text-base" aria-disabled="true" title="Coming soon">
+            <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed text-sm sm:text-base" aria-disabled="true" aria-label="Linux version coming soon" role="status">
               <div className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
                 <span className="text-xs sm:text-base">Linux - Coming Soon</span>
