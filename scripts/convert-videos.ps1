@@ -23,16 +23,12 @@ try {
 
 # List of videos to convert
 $videos = @(
-    "Task_final",
-    "planner_final",
-    "strike_final",
-    "analytics_final",
-    "import_final",
-    "startup_final"
+    "lock.mp4", 
+    'quick add.mp4'
 )
 
 foreach ($video in $videos) {
-    $inputFile = Join-Path $VIDEOS_DIR "${video}.mp4"
+    $inputFile = Join-Path $VIDEOS_DIR $video
     
     if (-not (Test-Path $inputFile)) {
         Write-Host "Warning: ${inputFile} not found. Skipping..." -ForegroundColor Yellow
@@ -41,8 +37,11 @@ foreach ($video in $videos) {
     
     Write-Host "Processing ${video}..." -ForegroundColor Green
     
+    # Get base name without extension for output files
+    $videoBaseName = [System.IO.Path]::GetFileNameWithoutExtension($video)
+    
     # Convert to WebM format (VP9 codec, high quality, smaller size)
-    $webmOutput = Join-Path $OUTPUT_DIR "${video}.webm"
+    $webmOutput = Join-Path $OUTPUT_DIR "${videoBaseName}.webm"
     Write-Host "  Converting to WebM..."
     
     $ffmpegArgs = @(
@@ -67,7 +66,7 @@ foreach ($video in $videos) {
     }
     
     # Create poster image (first frame)
-    $posterOutput = Join-Path $OUTPUT_DIR "${video}_poster.jpg"
+    $posterOutput = Join-Path $OUTPUT_DIR "${videoBaseName}_poster.jpg"
     Write-Host "  Creating poster image..."
     
     $posterArgs = @(

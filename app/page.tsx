@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import SplitText from './components/SplitText';
 import Feature from './components/Feature';
 import HeroFeature from './components/HeroFeature';
+import ComparisonTable from './components/ComparisonTable';
 import { getDownloadCounts, incrementDownload } from '../lib/downloads';
 import DownloadStats from './components/DownloadStats';
 import ErrorToast from './components/ErrorToast';
@@ -136,6 +137,26 @@ export default function Home() {
       gradientFrom: 'from-green-500',
       gradientTo: 'to-teal-600',
       hoverTextColor: 'group-hover:text-green-800'
+    },
+    {
+      number: 7,
+      title: 'Quick Add',
+      description: 'Add tasks instantly with quick add functionality. Capture your thoughts and ideas without interrupting your flow.',
+      videoSrc: 'quick add',
+      animationDelay: 0.7,
+      gradientFrom: 'from-blue-500',
+      gradientTo: 'to-cyan-600',
+      hoverTextColor: 'group-hover:text-blue-800'
+    },
+    {
+      number: 8,
+      title: 'Privacy First',
+      description: 'Your data stays secure with local encrypted storage. Complete privacy and control over your information.',
+      videoSrc: 'lock',
+      animationDelay: 0.8,
+      gradientFrom: 'from-indigo-500',
+      gradientTo: 'to-purple-600',
+      hoverTextColor: 'group-hover:text-indigo-800'
     }
   ];
   return (
@@ -340,6 +361,188 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Comparison Section */}
+      <section id="comparison" className="py-32 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 relative overflow-hidden">
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="w-full h-full bg-gradient-to-br from-yellow-100/20 via-amber-100/20 to-orange-100/20"></div>
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-yellow-200/30 to-amber-200/30 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-r from-orange-200/30 to-red-200/30 rounded-full blur-xl animate-bounce"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-r from-amber-200/30 to-yellow-200/30 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 shadow-lg">
+                <span className="text-sm sm:text-base font-bold text-yellow-800">Compare</span>
+              </div>
+              <SplitText 
+                text="Feature Comparison"
+                tag="h2"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-yellow-800 drop-shadow-lg"
+                splitType="words"
+                delay={60}
+                duration={0.8}
+                from={{ opacity: 0, y: 50 }}
+                to={{ opacity: 1, y: 0 }}
+                onLetterAnimationComplete={() => {}}
+              />
+            </div>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-yellow-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
+              See how Shakshuka compares to other productivity tools
+            </p>
+          </div>
+          
+          <div className="max-w-7xl mx-auto">
+            <ComparisonTable
+              apps={[
+                {
+                  name: 'Shakshuka',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': true,
+                    'Task app integrations': true,
+                    'Guided planning & rituals': true,
+                    'Daily shutdown & highlights': true,
+                    'Analytics': true,
+                    'Security/Password protection': true,
+                    'Local encrypted storage': true,
+                    'Auto-start integration': true,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': true,
+                    'Advanced UI customization': true,
+                    'Free & Open Source': true,
+                  }
+                },
+                {
+                  name: 'Sunsama',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': true,
+                    'Task app integrations': true,
+                    'Guided planning & rituals': true,
+                    'Daily shutdown & highlights': true,
+                    'Analytics': true,
+                    'Security/Password protection': false,
+                    'Local encrypted storage': false,
+                    'Auto-start integration': false,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': false,
+                    'Advanced UI customization': false,
+                    'Free & Open Source': false,
+                  }
+                },
+                {
+                  name: 'Trello',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': false,
+                    'Task app integrations': true,
+                    'Guided planning & rituals': false,
+                    'Daily shutdown & highlights': false,
+                    'Analytics': true,
+                    'Security/Password protection': false,
+                    'Local encrypted storage': false,
+                    'Auto-start integration': false,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': false,
+                    'Advanced UI customization': false,
+                    'Free & Open Source': false,
+                  }
+                },
+                {
+                  name: 'Basecamp',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': false,
+                    'Task app integrations': false,
+                    'Guided planning & rituals': false,
+                    'Daily shutdown & highlights': false,
+                    'Analytics': true,
+                    'Security/Password protection': false,
+                    'Local encrypted storage': false,
+                    'Auto-start integration': false,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': false,
+                    'Advanced UI customization': false,
+                    'Free & Open Source': false,
+                  }
+                },
+                {
+                  name: 'Asana',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': true,
+                    'Task app integrations': true,
+                    'Guided planning & rituals': false,
+                    'Daily shutdown & highlights': false,
+                    'Analytics': true,
+                    'Security/Password protection': false,
+                    'Local encrypted storage': false,
+                    'Auto-start integration': false,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': false,
+                    'Advanced UI customization': false,
+                    'Free & Open Source': false,
+                  }
+                },
+                {
+                  name: 'TickTick',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': true,
+                    'Task app integrations': false,
+                    'Guided planning & rituals': false,
+                    'Daily shutdown & highlights': false,
+                    'Analytics': true,
+                    'Security/Password protection': false,
+                    'Local encrypted storage': false,
+                    'Auto-start integration': false,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': false,
+                    'Advanced UI customization': false,
+                    'Free & Open Source': false,
+                  }
+                },
+                {
+                  name: 'Todoist',
+                  features: {
+                    'Calendar integration': true,
+                    'Timeboxing': false,
+                    'Task app integrations': false,
+                    'Guided planning & rituals': false,
+                    'Daily shutdown & highlights': false,
+                    'Analytics': false,
+                    'Security/Password protection': false,
+                    'Local encrypted storage': false,
+                    'Auto-start integration': false,
+                    'Import/Export functionality': true,
+                    'Task completion with strike-through': false,
+                    'Advanced UI customization': false,
+                    'Free & Open Source': false,
+                  }
+                },
+              ]}
+              features={[
+                'Calendar integration',
+                'Timeboxing',
+                'Task app integrations',
+                'Guided planning & rituals',
+                'Daily shutdown & highlights',
+                'Analytics',
+                'Security/Password protection',
+                'Local encrypted storage',
+                'Auto-start integration',
+                'Import/Export functionality',
+                'Task completion with strike-through',
+                'Advanced UI customization',
+                'Free & Open Source',
+              ]}
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Pricing Section */}
       <section id="pricing" className="py-32 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
