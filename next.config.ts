@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  
   // Image Optimization
   images: {
     // Allow images from these domains (if using external images)
