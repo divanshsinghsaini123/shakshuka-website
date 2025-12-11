@@ -20,7 +20,7 @@ export default function Home() {
     let mounted = true;
     setIsLoading(true);
     setError(null);
-    
+    console.log("this is the link 0-----"+ process.env['NEXT_PUBLIC_DOWNLOAD_URL']);
     getDownloadCounts()
       .then(c => {
         if (mounted) {
@@ -66,7 +66,7 @@ export default function Home() {
     },
     {
       title: 'Analytics',
-      description: 'Dashboard with productivity stats, task completion streaks, and performance insights.',
+      description: 'Dashboard with producrtivity stats, task completion streaks, and performance insights.',
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />,
       gradient: 'bg-gradient-to-r from-orange-500 to-amber-500'
     },
@@ -213,8 +213,8 @@ export default function Home() {
               <a 
                 href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
                 className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-                onClick={async (e) => {
-                  e.preventDefault();
+                onClick={async () => {
+                  // e.preventDefault();
                   // Optimistically update UI
                   setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
                   
@@ -624,8 +624,8 @@ export default function Home() {
             <a 
                 href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
               className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base bg-warm-orange text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-              onClick={async (e) => {
-                e.preventDefault();
+              onClick={async () => {
+                // e.preventDefault();
                 // Optimistically update UI
                 setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
                 
