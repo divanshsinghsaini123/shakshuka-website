@@ -28,6 +28,15 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    env:
+      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+      UPSTASH_REDIS_REST_TOKEN : ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+      NEXT_PUBLIC_DOWNLOAD_URL : ${{ secrets.NEXT_PUBLIC_DOWNLOAD_URL }}
+      NEXT_PUBLIC_GITHUB_URL : ${{ secrets.NEXT_PUBLIC_GITHUB_URL }}
+      NEXT_PUBLIC_SITE_URL : ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+
+
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
