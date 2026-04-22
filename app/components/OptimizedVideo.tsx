@@ -86,7 +86,21 @@ export default function OptimizedVideo({
   }, [shouldLoad, isIntersecting, autoPlay, src]);
 
   // Generate poster path if not provided
-  const posterPath = poster || `/videos/${src}_poster.jpg`;
+  // Support both the standard _poster.jpg and the new .png images directly
+  const [posterPath, setPosterPath] = useState(poster || `/videos/${src}_poster.jpg`);
+
+  useEffect(() => {
+    if (!poster) {
+      // If the default poster fails, try the .png version (useful for static image features)
+      const img = new Image();
+      img.src = posterPath;
+      img.onerror = () => {
+        if (posterPath.endsWith('_poster.jpg')) {
+          setPosterPath(`/videos/${src}.png`);
+        }
+      };
+    }
+  }, [src, poster, posterPath]);
 
   return (
     <div ref={containerRef} className="relative">

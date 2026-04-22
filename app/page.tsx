@@ -20,7 +20,7 @@ export default function Home() {
     let mounted = true;
     setIsLoading(true);
     setError(null);
-    console.log("this is the link 0-----"+ process.env['NEXT_PUBLIC_DOWNLOAD_URL']);
+    console.log("this is the link 0-----" + process.env['NEXT_PUBLIC_DOWNLOAD_URL']);
     getDownloadCounts()
       .then(c => {
         if (mounted) {
@@ -36,7 +36,7 @@ export default function Home() {
           setIsLoading(false);
         }
       });
-    
+
     return () => { mounted = false; };
   }, []);
   const features = [
@@ -175,6 +175,26 @@ export default function Home() {
       gradientFrom: 'from-indigo-500',
       gradientTo: 'to-purple-600',
       hoverTextColor: 'group-hover:text-indigo-800'
+    },
+    {
+      number: 9,
+      title: 'Phone Sync',
+      description: 'Keep your tasks and notes in perfect harmony. Automatic two-way sync between your desktop and the new Flutter companion app.',
+      videoSrc: 'phone_sync',
+      animationDelay: 0.9,
+      gradientFrom: 'from-blue-500',
+      gradientTo: 'to-indigo-600',
+      hoverTextColor: 'group-hover:text-blue-800'
+    },
+    {
+      number: 10,
+      title: 'Advanced Notes',
+      description: 'A powerful Notepad++ inspired notes system. Capture long-form ideas with version history and mobile-optimized layouts.',
+      videoSrc: 'notes',
+      animationDelay: 1.0,
+      gradientFrom: 'from-teal-500',
+      gradientTo: 'to-emerald-600',
+      hoverTextColor: 'group-hover:text-teal-800'
     }
   ];
   return (
@@ -187,37 +207,37 @@ export default function Home() {
             <div className="w-full h-full bg-gradient-to-br from-amber-100/20 to-orange-100/20"></div>
           </div>
         </div>
-        
+
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-r from-amber-200 to-orange-200 rounded-full blur-xl opacity-60 animate-pulse"></div>
         <div className="absolute top-40 right-20 w-32 h-32 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-full blur-xl opacity-40 animate-bounce"></div>
         <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-gradient-to-r from-orange-200 to-red-200 rounded-full blur-lg opacity-50 animate-pulse"></div>
-        
+
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="backdrop-blur-sm bg-white/10 rounded-3xl p-6 sm:p-8 md:p-12 border border-white/20 shadow-2xl">
-          <SplitText 
+            <SplitText
               text="Shakshuka"
-            tag="h1"
+              tag="h1"
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 text-amber-800"
-            splitType="chars"
-            delay={50}
-            duration={0.8}
-            from={{ opacity: 0, y: 50 }}
-            to={{ opacity: 1, y: 0 }}
-            onLetterAnimationComplete={() => {}}
-          />
-          <SplitText 
+              splitType="chars"
+              delay={50}
+              duration={0.8}
+              from={{ opacity: 0, y: 50 }}
+              to={{ opacity: 1, y: 0 }}
+              onLetterAnimationComplete={() => { }}
+            />
+            <SplitText
               text="Modern Task Management"
               tag="h2"
               className="text-xl sm:text-2xl md:text-3xl font-light mb-6 sm:mb-8 text-amber-800"
-            splitType="words"
+              splitType="words"
               delay={200}
-            duration={0.6}
-            from={{ opacity: 0, y: 30 }}
-            to={{ opacity: 1, y: 0 }}
-            onLetterAnimationComplete={() => {}}
-          />
-            <SplitText 
+              duration={0.6}
+              from={{ opacity: 0, y: 30 }}
+              to={{ opacity: 1, y: 0 }}
+              onLetterAnimationComplete={() => { }}
+            />
+            <SplitText
               text="Find your flow. Transform chaos into calm with mindful task management that nurtures focus and inner peace."
               className="text-sm sm:text-base md:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-amber-700 leading-relaxed px-4"
               splitType="words"
@@ -225,17 +245,17 @@ export default function Home() {
               duration={0.6}
               from={{ opacity: 0, y: 20 }}
               to={{ opacity: 1, y: 0 }}
-              onLetterAnimationComplete={() => {}}
+              onLetterAnimationComplete={() => { }}
             />
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center" role="group" aria-label="Download options">
-              <a 
+              <a
                 href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
                 className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                 onClick={async () => {
                   // e.preventDefault();
                   // Optimistically update UI
                   setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
-                  
+
                   const result = await incrementDownload('windows');
                   if (!result.success && result.error) {
                     // Revert optimistic update on error
@@ -247,7 +267,7 @@ export default function Home() {
               >
                 <div className="flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
                   Windows
                 </div>
@@ -255,7 +275,7 @@ export default function Home() {
               <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed" aria-disabled="true" aria-label="Mac version coming soon" role="status">
                 <div className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
                   <span className="text-xs sm:text-base">Mac - Coming Soon</span>
                 </div>
@@ -263,7 +283,7 @@ export default function Home() {
               <div className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-medium transition-all duration-300 border-2 border-dashed border-warm-orange text-secondary-brown opacity-70 cursor-not-allowed" aria-disabled="true" aria-label="Linux version coming soon" role="status">
                 <div className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                   </svg>
                   <span className="text-xs sm:text-base">Linux - Coming Soon</span>
                 </div>
@@ -272,8 +292,8 @@ export default function Home() {
             <div className="mt-6 sm:mt-8 flex justify-center px-4">
               <DownloadStats counts={downloadCounts} isLoading={isLoading} error={error} />
             </div>
-            <a 
-              href="#features" 
+            <a
+              href="#features"
               className="mt-6 sm:mt-10 inline-flex items-center justify-center text-amber-700 hover:text-amber-800 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-lg p-2"
               aria-label="Scroll to features section"
             >
@@ -291,14 +311,14 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-full opacity-20">
           <div className="w-full h-full bg-gradient-to-br from-amber-100/10 to-orange-100/10"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-amber-200 to-orange-200 border-2 border-amber-300 shadow-lg">
                 <span className="text-sm sm:text-base font-bold text-amber-800">Features</span>
               </div>
-              <SplitText 
+              <SplitText
                 text="Powerful Features"
                 tag="h2"
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-amber-800 drop-shadow-lg"
@@ -307,17 +327,17 @@ export default function Home() {
                 duration={0.7}
                 from={{ opacity: 0, y: 40 }}
                 to={{ opacity: 1, y: 0 }}
-                onLetterAnimationComplete={() => {}}
+                onLetterAnimationComplete={() => { }}
               />
             </div>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-amber-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               Everything you need to organize your life and boost productivity
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {
-              features.map((feature, index) =>(
+              features.map((feature, index) => (
                 <Feature key={index} title={feature.title} description={feature.description} icon={feature.icon} gradient={feature.gradient} />
               ))
             }
@@ -335,14 +355,14 @@ export default function Home() {
           <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-r from-orange-200/30 to-red-200/30 rounded-full blur-xl animate-bounce"></div>
           <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-r from-amber-200/30 to-yellow-200/30 rounded-full blur-3xl animate-pulse"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 shadow-lg hover:scale-105 transition-transform duration-300">
                 <span className="text-sm sm:text-base font-bold text-yellow-800">Process</span>
               </div>
-              <SplitText 
+              <SplitText
                 text="How It Works"
                 tag="h2"
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-yellow-800 drop-shadow-lg"
@@ -351,14 +371,14 @@ export default function Home() {
                 duration={0.8}
                 from={{ opacity: 0, y: 50 }}
                 to={{ opacity: 1, y: 0 }}
-                onLetterAnimationComplete={() => {}}
+                onLetterAnimationComplete={() => { }}
               />
             </div>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-yellow-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               Simple, intuitive, and powerful task management designed for modern productivity
             </p>
           </div>
-          
+
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
               {heroFeatures.map((feature) => (
@@ -388,14 +408,14 @@ export default function Home() {
           <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-r from-orange-200/30 to-red-200/30 rounded-full blur-xl animate-bounce"></div>
           <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-r from-amber-200/30 to-yellow-200/30 rounded-full blur-3xl animate-pulse"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-yellow-200 to-amber-200 border-2 border-yellow-300 shadow-lg">
                 <span className="text-sm sm:text-base font-bold text-yellow-800">Compare</span>
               </div>
-              <SplitText 
+              <SplitText
                 text="Feature Comparison"
                 tag="h2"
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-yellow-800 drop-shadow-lg"
@@ -404,14 +424,14 @@ export default function Home() {
                 duration={0.8}
                 from={{ opacity: 0, y: 50 }}
                 to={{ opacity: 1, y: 0 }}
-                onLetterAnimationComplete={() => {}}
+                onLetterAnimationComplete={() => { }}
               />
             </div>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-yellow-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
               See how Shakshuka compares to other productivity tools
             </p>
           </div>
-          
+
           <div className="max-w-7xl mx-auto">
             <ComparisonTable
               apps={[
@@ -559,7 +579,7 @@ export default function Home() {
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-orange-200 to-red-200 border-2 border-orange-300 shadow-lg">
                 <span className="text-sm sm:text-base font-bold text-orange-800">Open Source</span>
               </div>
-              <SplitText 
+              <SplitText
                 text="Open Source & Support"
                 tag="h2"
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 md:mb-8 text-orange-800 drop-shadow-lg"
@@ -568,7 +588,7 @@ export default function Home() {
                 duration={0.8}
                 from={{ opacity: 0, y: 50 }}
                 to={{ opacity: 1, y: 0 }}
-                onLetterAnimationComplete={() => {}}
+                onLetterAnimationComplete={() => { }}
               />
             </div>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center text-orange-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
@@ -582,16 +602,16 @@ export default function Home() {
                 Our product is completely free and open source. We believe in transparency and community-driven development.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href={process.env['NEXT_PUBLIC_GITHUB_URL']}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-                aria-label="View Shakshuka on GitHub (opens in new tab)"
-              >
-                View on GitHub
-              </a>
-                <button 
+                <a
+                  href={process.env['NEXT_PUBLIC_GITHUB_URL']}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                  aria-label="View Shakshuka on GitHub (opens in new tab)"
+                >
+                  View on GitHub
+                </a>
+                <button
                   className="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-r from-orange-500 to-red-600 text-white font-medium shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                   aria-label="Support Shakshuka development"
                 >
@@ -611,7 +631,7 @@ export default function Home() {
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-200 to-pink-200 border-2 border-red-300 shadow-lg">
                 <span className="text-sm sm:text-base font-bold text-red-800">Download</span>
               </div>
-              <SplitText 
+              <SplitText
                 text="Download Now"
                 tag="h2"
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-red-800 drop-shadow-lg"
@@ -620,7 +640,7 @@ export default function Home() {
                 duration={0.7}
                 from={{ opacity: 0, y: 40 }}
                 to={{ opacity: 1, y: 0 }}
-                onLetterAnimationComplete={() => {}}
+                onLetterAnimationComplete={() => { }}
               />
             </div>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-red-700 max-w-4xl mx-auto leading-relaxed font-medium px-4">
@@ -628,14 +648,14 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-4xl mx-auto" role="group" aria-label="Download options">
-            <a 
-                href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
+            <a
+              href={process.env['NEXT_PUBLIC_DOWNLOAD_URL']}
               className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base bg-warm-orange text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
               onClick={async () => {
                 // e.preventDefault();
                 // Optimistically update UI
                 setDownloadCounts(prev => ({ ...prev, windows: prev.windows + 1 }));
-                
+
                 const result = await incrementDownload('windows');
                 if (!result.success && result.error) {
                   // Revert optimistic update on error
@@ -647,7 +667,7 @@ export default function Home() {
             >
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span className="text-xs sm:text-base">Download for Windows</span>
               </div>
@@ -655,7 +675,7 @@ export default function Home() {
             <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed text-sm sm:text-base" aria-disabled="true" aria-label="Mac version coming soon" role="status">
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
                 <span className="text-xs sm:text-base">Mac - Coming Soon</span>
               </div>
@@ -663,7 +683,7 @@ export default function Home() {
             <div className="px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-2 border-dashed border-warm-orange text-secondary-brown transition-all duration-300 opacity-60 cursor-not-allowed text-sm sm:text-base" aria-disabled="true" aria-label="Linux version coming soon" role="status">
               <div className="flex items-center justify-center gap-2">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                 </svg>
                 <span className="text-xs sm:text-base">Linux - Coming Soon</span>
               </div>
@@ -676,7 +696,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      
+
       {/* Error Toast */}
       {toastError && (
         <ErrorToast
