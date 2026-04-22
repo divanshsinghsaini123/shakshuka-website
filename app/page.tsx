@@ -48,31 +48,49 @@ export default function Home() {
     },
     {
       title: 'Daily Planner',
-      description: 'Visual task scheduling with hourly time slots. Drag-and-drop interface for intuitive planning.',
+      description: 'Visual task scheduling with hourly time slots. Now includes improved striking logic and task reset indicators.',
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />,
       gradient: 'bg-gradient-to-r from-orange-400 to-orange-500'
     },
     {
+      title: 'Mobile Sync',
+      description: 'Sync effortlessly with the Flutter companion app. Seamless two-way synchronization keeps your tasks updated across all devices.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />,
+      gradient: 'bg-gradient-to-r from-blue-400 to-indigo-500'
+    },
+    {
+      title: 'Advanced Notes',
+      description: 'Integrated notes system with version history and version restore. Features Notepad++ inspired organization and mobile layouts.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />,
+      gradient: 'bg-gradient-to-r from-teal-400 to-emerald-500'
+    },
+    {
+      title: 'Activity Heatmap',
+      description: 'Visualize your productivity patterns with GitHub-style contribution graphs. Get daily recaps and strike rate insights.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />,
+      gradient: 'bg-gradient-to-r from-orange-500 to-red-600'
+    },
+    {
       title: 'Data Security',
-      description: 'Encrypted local storage keeps your data secure. Export/import functionality with complete privacy.',
+      description: 'Encrypted local storage keeps your data secure. Export/import functionality with complete privacy and control.',
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />,
       gradient: 'bg-gradient-to-r from-yellow-500 to-yellow-600'
     },
     {
       title: 'Auto-Start',
-      description: 'Windows autostart integration. Auto-save functionality and productivity tracking.',
+      description: 'Windows autostart integration ensures your workspace is ready. Auto-fetch logic links and syncs with your smartphone.',
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />,
       gradient: 'bg-gradient-to-r from-amber-500 to-orange-500'
     },
     {
-      title: 'Analytics',
-      description: 'Dashboard with producrtivity stats, task completion streaks, and performance insights.',
-      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />,
-      gradient: 'bg-gradient-to-r from-orange-500 to-amber-500'
+      title: 'Performance',
+      description: 'Optimized rendering for long task descriptions and large note sets. Minimal lag with a tailored UI-manager system.',
+      icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />,
+      gradient: 'bg-gradient-to-r from-cyan-400 to-blue-500'
     },
     {
       title: 'Beautiful UI',
-      description: 'Glassmorphism effects, smooth animations, and meditation-app inspired design.',
+      description: 'Glassmorphism effects, smooth animations, and a tailored Chrome theme with a centralized Modal Manager.',
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />,
       gradient: 'bg-gradient-to-r from-yellow-400 to-amber-500'
     },
@@ -400,8 +418,10 @@ export default function Home() {
                 {
                   name: 'Shakshuka',
                   features: {
-                    'Calendar integration': true,
-                    'Timeboxing': true,
+                    'Mobile companion app': true,
+                    'Two-way cloud sync': true,
+                    'Activity heatmap': true,
+                    'Advanced notes & versioning': true,
                     'Task app integrations': true,
                     'Guided planning & rituals': true,
                     'Daily shutdown & highlights': true,
@@ -410,16 +430,17 @@ export default function Home() {
                     'Local encrypted storage': true,
                     'Auto-start integration': true,
                     'Import/Export functionality': true,
-                    'Task completion with strike-through': true,
-                    'Advanced UI customization': true,
+                    'Task completion streaks': true,
                     'Free & Open Source': true,
                   }
                 },
                 {
                   name: 'Sunsama',
                   features: {
-                    'Calendar integration': true,
-                    'Timeboxing': true,
+                    'Mobile companion app': true,
+                    'Two-way cloud sync': true,
+                    'Activity heatmap': false,
+                    'Advanced notes & versioning': false,
                     'Task app integrations': true,
                     'Guided planning & rituals': true,
                     'Daily shutdown & highlights': true,
@@ -428,16 +449,17 @@ export default function Home() {
                     'Local encrypted storage': false,
                     'Auto-start integration': false,
                     'Import/Export functionality': true,
-                    'Task completion with strike-through': false,
-                    'Advanced UI customization': false,
+                    'Task completion streaks': false,
                     'Free & Open Source': false,
                   }
                 },
                 {
                   name: 'Trello',
                   features: {
-                    'Calendar integration': true,
-                    'Timeboxing': false,
+                    'Mobile companion app': true,
+                    'Two-way cloud sync': true,
+                    'Activity heatmap': false,
+                    'Advanced notes & versioning': false,
                     'Task app integrations': true,
                     'Guided planning & rituals': false,
                     'Daily shutdown & highlights': false,
@@ -446,34 +468,17 @@ export default function Home() {
                     'Local encrypted storage': false,
                     'Auto-start integration': false,
                     'Import/Export functionality': true,
-                    'Task completion with strike-through': false,
-                    'Advanced UI customization': false,
-                    'Free & Open Source': false,
-                  }
-                },
-                {
-                  name: 'Basecamp',
-                  features: {
-                    'Calendar integration': true,
-                    'Timeboxing': false,
-                    'Task app integrations': false,
-                    'Guided planning & rituals': false,
-                    'Daily shutdown & highlights': false,
-                    'Analytics': true,
-                    'Security/Password protection': false,
-                    'Local encrypted storage': false,
-                    'Auto-start integration': false,
-                    'Import/Export functionality': true,
-                    'Task completion with strike-through': false,
-                    'Advanced UI customization': false,
+                    'Task completion streaks': false,
                     'Free & Open Source': false,
                   }
                 },
                 {
                   name: 'Asana',
                   features: {
-                    'Calendar integration': true,
-                    'Timeboxing': true,
+                    'Mobile companion app': true,
+                    'Two-way cloud sync': true,
+                    'Activity heatmap': false,
+                    'Advanced notes & versioning': false,
                     'Task app integrations': true,
                     'Guided planning & rituals': false,
                     'Daily shutdown & highlights': false,
@@ -482,16 +487,17 @@ export default function Home() {
                     'Local encrypted storage': false,
                     'Auto-start integration': false,
                     'Import/Export functionality': true,
-                    'Task completion with strike-through': false,
-                    'Advanced UI customization': false,
+                    'Task completion streaks': false,
                     'Free & Open Source': false,
                   }
                 },
                 {
                   name: 'TickTick',
                   features: {
-                    'Calendar integration': true,
-                    'Timeboxing': true,
+                    'Mobile companion app': true,
+                    'Two-way cloud sync': true,
+                    'Activity heatmap': false,
+                    'Advanced notes & versioning': false,
                     'Task app integrations': false,
                     'Guided planning & rituals': false,
                     'Daily shutdown & highlights': false,
@@ -500,16 +506,17 @@ export default function Home() {
                     'Local encrypted storage': false,
                     'Auto-start integration': false,
                     'Import/Export functionality': true,
-                    'Task completion with strike-through': false,
-                    'Advanced UI customization': false,
+                    'Task completion streaks': false,
                     'Free & Open Source': false,
                   }
                 },
                 {
                   name: 'Todoist',
                   features: {
-                    'Calendar integration': true,
-                    'Timeboxing': false,
+                    'Mobile companion app': true,
+                    'Two-way cloud sync': true,
+                    'Activity heatmap': false,
+                    'Advanced notes & versioning': false,
                     'Task app integrations': false,
                     'Guided planning & rituals': false,
                     'Daily shutdown & highlights': false,
@@ -518,15 +525,16 @@ export default function Home() {
                     'Local encrypted storage': false,
                     'Auto-start integration': false,
                     'Import/Export functionality': true,
-                    'Task completion with strike-through': false,
-                    'Advanced UI customization': false,
+                    'Task completion streaks': false,
                     'Free & Open Source': false,
                   }
                 },
               ]}
               features={[
-                'Calendar integration',
-                'Timeboxing',
+                'Mobile companion app',
+                'Two-way cloud sync',
+                'Activity heatmap',
+                'Advanced notes & versioning',
                 'Task app integrations',
                 'Guided planning & rituals',
                 'Daily shutdown & highlights',
@@ -535,8 +543,7 @@ export default function Home() {
                 'Local encrypted storage',
                 'Auto-start integration',
                 'Import/Export functionality',
-                'Task completion with strike-through',
-                'Advanced UI customization',
+                'Task completion streaks',
                 'Free & Open Source',
               ]}
             />
