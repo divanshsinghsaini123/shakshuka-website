@@ -1,54 +1,46 @@
 import { NextResponse } from 'next/server';
-import { Redis } from '@upstash/redis';
+import clientPromise from '@/lib/mongodb';
 import { retry, redisRetryOptions } from '@/lib/retry';
 
 type Platform = 'windows' | 'mac' | 'linux';
 
 const VALID_PLATFORMS: Platform[] = ['windows', 'mac', 'linux'];
 
-// Initialize Upstash Redis client
-// Make sure to set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in your environment variables
-const url = process.env['UPSTASH_REDIS_REST_URL'];
-const token = process.env['UPSTASH_REDIS_REST_TOKEN'];
-
-if (!url || !token) {
-  throw new Error(
-    'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set in environment variables.\n' +
-    'Make sure your .env.local file exists in the project root and contains:\n' +
-    'UPSTASH_REDIS_REST_URL=https://careful-yak-25151.upstash.io\n' +
-    'UPSTASH_REDIS_REST_TOKEN=your-token-here'
-  );
+interface StatsDoc {
+  _id: string;
+  windows?: number;
+  mac?: number;
+  linux?: number;
 }
 
-const redis = new Redis({
-  url,
-  token,
-});
-
 async function getCounts(): Promise<Record<Platform, number>> {
-  const windows = await retry(
-    () => redis.get<number>('downloads:windows'),
-    redisRetryOptions
-  ) ?? 0;
+  const client = await clientPromise;
+  const db = client.db();
   
-  const mac = await retry(
-    () => redis.get<number>('downloads:mac'),
+  const stats = await retry(
+    () => db.collection<StatsDoc>('downloads').findOne({ _id: 'stats' }),
     redisRetryOptions
-  ) ?? 0;
+  );
   
-  const linux = await retry(
-    () => redis.get<number>('downloads:linux'),
-    redisRetryOptions
-  ) ?? 0;
-  
-  return { windows, mac, linux };
+  return {
+    windows: stats?.windows ?? 0,
+    mac: stats?.mac ?? 0,
+    linux: stats?.linux ?? 0
+  };
 }
 
 async function incrementCount(platform: Platform): Promise<Record<Platform, number>> {
+  const client = await clientPromise;
+  const db = client.db();
+  
   // Atomic increment operation - works across all instances!
   // Retry the increment operation to handle flaky network
   await retry(
-    () => redis.incr(`downloads:${platform}`),
+    () => db.collection<StatsDoc>('downloads').updateOne(
+      { _id: 'stats' },
+      { $inc: { [platform]: 1 } },
+      { upsert: true }
+    ),
     {
       ...redisRetryOptions,
       maxRetries: 5 // More retries for increment since it's critical
@@ -56,22 +48,7 @@ async function incrementCount(platform: Platform): Promise<Record<Platform, numb
   );
   
   // Get all counts with retry logic
-  const windows = await retry(
-    () => redis.get<number>('downloads:windows'),
-    redisRetryOptions
-  ) ?? 0;
-  
-  const mac = await retry(
-    () => redis.get<number>('downloads:mac'),
-    redisRetryOptions
-  ) ?? 0;
-  
-  const linux = await retry(
-    () => redis.get<number>('downloads:linux'),
-    redisRetryOptions
-  ) ?? 0;
-  
-  return { windows, mac, linux };
+  return getCounts();
 }
 
 export async function GET() {
